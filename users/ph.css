@@ -1,7 +1,15 @@
-   body { font-family: Arial; padding: 20px; background: #f0f0f0; }
-    h2 { color: #2ea443; }
+   body { 
+    font-family: Arial; padding: 20px; 
+    background-image: url("background.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+    h2 { 
+      color: #2ea443; 
+    }
     .menu {
-      background: #fff;
+      background: whitesmoke;
       padding: 20px;
       border-radius: 10px;
       max-width: 500px;
@@ -11,7 +19,7 @@
     .menu a {
       display: block;
       background: #2ea443;
-      color: white;
+      color: whitesmoke;
       padding: 12px;
       text-decoration: none;
       border-radius: 5px;

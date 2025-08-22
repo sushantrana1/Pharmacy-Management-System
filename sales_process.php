@@ -2,24 +2,43 @@
 session_start();
 $conn = new mysqli("localhost", "root", "", "pharmacy");
 
-// Get form data
-$Med_ID = $_POST['Med_ID'];
-$Sale_Qty = $_POST['Sale_Qty'];
-$Tot_Price = $_POST['Tot_Price'];
-$C_ID = !empty($_POST['C_ID']) ? $_POST['C_ID'] : 'NULL';
-$E_ID = $_SESSION['user_id'] ?? 1; // fallback for testing
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $Med_ID = $_POST['Med_ID'];
+    $Sale_Qty = $_POST['Sale_Qty'];
+    $C_ID = !empty($_POST['C_ID']) ? $_POST['C_ID'] : 'NULL';
+    $E_ID = $_SESSION['user_id'] ?? 1;
 
-// Step 1: Insert into `sales` table
-$conn->query("INSERT INTO sales (E_ID, C_ID, Total_Amount) VALUES ($E_ID, $C_ID, $Tot_Price)");
-$Sale_ID = $conn->insert_id; // get last inserted Sale_ID
+    $query = $conn->query("SELECT Med_Qty, Med_Price FROM medicine WHERE Med_ID = $Med_ID");
+    if (!$query || $query->num_rows == 0) {
+        die("Medicine not found.");
+    }
 
-// Step 2: Insert into `sales_items`
-$conn->query("INSERT INTO sales_items (Sale_ID, Med_ID, Sale_Qty, Tot_Price)
-              VALUES ($Sale_ID, $Med_ID, $Sale_Qty, $Tot_Price)");
+    $med = $query->fetch_assoc();
 
-// Step 3: Update medicine stock
-$conn->query("UPDATE medicine SET Med_Qty = Med_Qty - $Sale_Qty WHERE Med_ID = $Med_ID");
+    if ($med['Med_Qty'] < $Sale_Qty) {
+        die("Not enough stock.");
+    }
 
-// Go back to sales page
-header("Location: sales_report.php");
+    $Tot_Price = $Sale_Qty * $med['Med_Price'];
+    $S_Date = date("Y-m-d");
+    $S_Time = date("H:i:s");
+
+    $salesInsert = $conn->query("INSERT INTO sales (C_ID, S_Date, S_Time, Total_Amount)
+                                 VALUES ($C_ID, '$S_Date', '$S_Time', $Tot_Price)");
+    if (!$salesInsert) {
+        die("Sales insert failed: " . $conn->error);
+    }
+
+    $Sale_ID = $conn->insert_id;
+
+    $itemInsert = $conn->query("INSERT INTO sales_items (Sale_ID, Med_ID, Sale_Qty, Tot_Price)
+                                VALUES ($Sale_ID, $Med_ID, $Sale_Qty, $Tot_Price)");
+    if (!$itemInsert) {
+        die("Sales item insert failed: " . $conn->error);
+    }
+
+    $conn->query("UPDATE medicine SET Med_Qty = Med_Qty - $Sale_Qty WHERE Med_ID = $Med_ID");
+
+    echo "<script>alert('Sale success'); window.location='sales_report.php';</script>";
+}
 ?>

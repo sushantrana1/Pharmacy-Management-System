@@ -1,5 +1,4 @@
 <?php
-// Connect and get medicine by ID
 $conn = new mysqli("localhost", "root", "", "pharmacy");
 $id = $_GET['id'];
 $med = $conn->query("SELECT * FROM medicine WHERE Med_ID=$id")->fetch_assoc();

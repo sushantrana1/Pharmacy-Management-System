@@ -4,6 +4,10 @@ if (!isset($_SESSION['role'])) {
   header("Location: index.php");
   exit();
 }
+
+$role = $_SESSION['role'];
+$users_link = ($role === 'admin') ? 'users/admin.php' : 'users/pharmacist.php';
+
 $conn = new mysqli("localhost", "root", "", "pharmacy");
 $emps = $conn->query("SELECT * FROM employee");
 ?>
@@ -11,20 +15,16 @@ $emps = $conn->query("SELECT * FROM employee");
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Employee Management</title>
-  <style>
-  body { font-family: Arial; background: #f4f4f4; padding: 30px; }
-  h2 { color: #2a62d3; }
-  form, table { background: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; }
-  input { width: 200px; padding: 8px; margin: 5px; }
-  button { padding: 10px 15px; background: green; color: white; }
-  table { width: 100%; border-collapse: collapse; }
-  th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
-  .btn-edit { background: orange; color: white; padding: 5px 10px; text-decoration: none; }
-  .btn-del { background: red; color: white; padding: 5px 10px; text-decoration: none; }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div style="position: absolute; top: 10px; right: 10px; display: flex; gap: 10px;">
+  <a href="dashboard.php" style="padding: 8px 12px; background: #3498db; color: white; text-decoration: none; border-radius: 5px;">Back</a>
+  <a href="logout.php" style="padding: 8px 12px; background: #e74c3c; color: white; text-decoration: none; border-radius: 5px;">Logout</a>
+</div>
+<br>
 
 <h2>Add Employee</h2>
 <form action="add_employee.php" method="POST">
@@ -36,7 +36,10 @@ $emps = $conn->query("SELECT * FROM employee");
   </select>
   <input type="date" name="Bdate" required>
   <input type="number" name="E_Age" placeholder="Age" required><br>
-  <input type="text" name="E_Type" placeholder="Role (Admin/Pharmacist)" required>
+   <select type="text">
+    <option value="Admin">Admin</option>
+    <option value="Pharmacist">Pharmacist</option>
+  </select>
   <input type="number" step="0.01" name="E_Sal" placeholder="Salary" required>
   <input type="text" name="E_Phno" placeholder="Phone" required><br>
   <input type="date" name="E_date" placeholder="Join Date" required>
@@ -46,6 +49,7 @@ $emps = $conn->query("SELECT * FROM employee");
 </form>
 
 <h2>Employee List</h2>
+<div class="table-responsive">
 <table>
   <tr>
     <th>ID</th>
@@ -79,6 +83,7 @@ $emps = $conn->query("SELECT * FROM employee");
   </tr>
   <?php endwhile; ?>
 </table>
+</div>
 
 </body>
 </html>
