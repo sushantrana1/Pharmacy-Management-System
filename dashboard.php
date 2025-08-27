@@ -1,153 +1,204 @@
-<?php
-session_start();
-if (!isset($_SESSION['role'])) {
-  header("Location: index.php");
-  exit();
-}
-
-$role = $_SESSION['role']; // 'admin' or 'pharmacist'
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PMS Dashboard</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Animate.css -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-  <style>
-    body {
-      background-color: white;
-    }
-    .main-content{
-      overflow: hidden;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-      transition: 0.3s;
-    }
-    .logout-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-    }
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 231px;
-      background-color: #343a40;
-      padding-top: 75px;
-      color: white;
-    }
-    .sidebar a {
-      display: block;
-      color: white;
-      padding: 15px;
-      text-decoration: none;
-    }
-    .sidebar a:hover {
-      background-color: #495057;
-    }
-    .main-content {
-      margin-left: 240px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Pharmacy - Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-prescription-bottle-medical"></i>
+                <h1> Master Pharmacy </h1>
+            </div>
 
-<!-- Sidebar Navigation -->
-<div class="sidebar">
-    <h2 style="text-align:center;">📋 Modules</h2>
-    <a href="medicine.php">💊 Medicine</a>
-    <a href="suppliers.php">🚚 Suppliers</a>
-    <a href="purchase.php">📦 Purchase</a>
-    <a href="employees.php">👨‍⚕️ Employees</a>
-    <a href="customers.php">👥 Customers</a>
-    <a href="sales.php">🛒 Sales</a>
-    <a href="sales_report.php">📊 Sales Report</a>
-    <a href="logout.php">🚪 Logout</a>
-</div>
-
-<div class="main-content container mt-5">
- 
-  <a href="logout.php" class="btn btn-danger logout-btn"><i class="fas fa-sign-out-alt"></i>Logout</a>
-
-  <h2 class="mb-4 text-center animate__animated animate__fadeInDown">Welcome to Master Pharmacy</h2>
-
-  <div class="row text-center animate__animated animate__fadeInUp animate__delay-1s">
-    <div class="col-md-4 mb-4">
-      <div class="card shadow">
-        <div class="card-body bg-primary text-white">
-          <i class="fas fa-pills fa-2x"></i>
-          <h5 class="mt-2">Total Medicines</h5>
-          <h3>150</h3>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="medicine.php"><i class="fas fa-pills"></i> Medicine</a></li>
+                <li><a href="suppliers.php"><i class="fas fa-truck"></i> Suppliers</a></li>
+                <li><a href="purchase.php"><i class="fas fa-boxes"></i> Purchase</a></li>
+                <li><a href="employees.php"><i class="fas fa-user-md"></i> Employees</a></li>
+                <li><a href="customers.php"><i class="fas fa-user"></i> Customers</a></li>
+                <li><a href="sales.php"><i class="fas fa-cash-register"></i> Sales</a></li>
+                <li><a href="payment.php.php"><i class="fas fa-receipt"></i> Payment Invoice</a></li>
+                <li><a href="sales_report.php"><i class="fas fa-chart-line"></i> Sales Report</a></li>
+                <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
         </div>
-      </div>
-    </div>
-    <div class="col-md-4 mb-4">
-      <div class="card shadow">
-        <div class="card-body bg-success text-white">
-          <i class="fas fa-cash-register fa-2x"></i>
-          <h5 class="mt-2">Total Sales</h5>
-          <h3>Rs. 1,20,000</h3>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div class="welcome">
+                    <h2>Dashboard</h2>
+                    <p>Welcome Sir, Here's what's happening today.</p>
+                </div>
+
+                <div class="user-info">
+
+                    <a href="logout.php" class="btn btn-danger logout-btn"><i class="fas fa-sign-out-alt"></i>Logout</a>
+
+                </div>
+            </div>
+
+            <!-- Dashboard Cards -->
+            <div class="dashboard-cards">
+
+            <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><a href="medicine.php" style="text-decoration: none">Total Medicine</a></div>
+                        <div class="card-icon" style="background: rgba(56, 176, 0, 0.1);">
+                            <a href="medicine.php"><i class="fas fa-pills" style="color: #38b000;"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-value">140</div>
+                        <div class="card-footer">+5 from last week</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><a href="customers.php" style="text-decoration: none">Total Customers</a></div>
+                        <div class="card-icon" style="background: rgba(44, 125, 160, 0.1);">
+                            <a href="customers.php"><i class="fas fa-users" style="color: #2c7da0;"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-value">45</div>
+                        <div class="card-footer">+2 from last week</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><a href="suppliers.php" style="text-decoration: none">Total Supplier</a></div>
+                        <div class="card-icon" style="background: rgba(255, 193, 7, 0.1);">
+                            <a href="suppliers.php"><i class="fas fa-truck" style="color: #ffc107;"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-value">15</div>
+                        <div class="card-footer">+4 from last week</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><a href="sales_report.php" style="text-decoration: none">Total Sales</a></div>
+                        <div class="card-icon" style="background: rgba(220, 53, 69, 0.1);">
+                            <a href="sales_report.php"><i class="fas fa-file-invoice" style="color: #dc3545;"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-value">75</div>
+                        <div class="card-footer">+3 from last week</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- POS Section -->
+            <div class="pos-section">
+                <h2 class="section-title">Add New Data</h2>
+
+                <div class="pos-actions">
+                    <div class="pos-action">
+                        <a href="sales.php"><i class="fas fa-plus-circle"></i></a>
+                        <h3> <a href="sales.php" style="text-decoration: none; color: black">Add New Sale</a></h3>
+                        <p>Adding new sale transaction</p>
+                    </div>
+
+                    <div class="pos-action">
+                        <a href="medicine.php"><i class="fas fa-pills"></i></a>
+                        <h3> <a href="medicine.php" style="text-decoration: none; color: black">Add Medicine</a></h3>
+                        <p>Add new medicine to inventory</p>
+                    </div>
+
+                    <div class="pos-action">
+                        <a href="employees.php"><i class="fas fa-user-plus"></i></a>
+                        <h3> <a href="employees.php" style="text-decoration: none; color: black">Add Employee</a></h3>
+                        <p>Register a new employee</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Section -->
+            <div class="reports-section">
+                <h2 class="section-title">Reports</h2>
+
+                <div class="report-items">
+                    <div class="report-item">
+                        <a href="sales_report.php"><i class="fas fa-chart-line"></i></a>
+                        <div>
+                            <h3> <a href="sales_report.php" style="text-decoration: none; color: black">Sales Report</a></h3>
+                            <p>View sales analytics</p>
+                        </div>
+                    </div>
+
+                    <div class="report-item">
+                        <a href="purchase.php"><i class="fas fa-shopping-cart"></i></a>
+                        <div>
+                            <h3> <a href="purchase.php" style="text-decoration: none; color: black">Purchase Report</a></h3>
+                            <p>View purchases </p>
+                        </div>
+                    </div>
+
+                    <div class="report-item">
+                        <a href="medicine.php"><i class="fas fa-boxes"></i></a>
+                        <div>
+                            <h3> <a href="medicine.php" style="text-decoration: none; color: black">Medicine Report</a> </h3>
+                            <p>Inventory status</p>
+                        </div>
+                    </div>
+
+                    <div class="report-item">
+                        <a href="suppliers.php"><i class="fas fa-truck"></i></a>
+                        <div>
+                            <h3> <a href="suppliers.php" style="text-decoration: none; color: black"> Supplier Report</a> </h3>
+                            <p>Suppliers Overview</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-    <div class="col-md-4 mb-4">
-      <div class="card shadow">
-        <div class="card-body bg-warning text-dark">
-          <i class="fas fa-receipt fa-2x"></i>
-          <h5 class="mt-2">Today’s Bills</h5>
-          <h3>42</h3>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Chart Section -->
-  <div class="card mt-4">
-    <div class="card-header bg-info text-white">
-      <i class="fas fa-chart-bar"></i> Monthly Sales Chart
-    </div>
-    <div class="card-body">
-      <canvas id="salesChart" height="100"></canvas>
-    </div>
-  </div>
-</div>
+    <!-- <script>
+        // Simple JavaScript for interactive elements
+        document.addEventListener('DOMContentLoaded', function () {
+            // Add click events to cards and actions
+            const cards = document.querySelectorAll('.card, .pos-action, .report-item');
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  const ctx = document.getElementById('salesChart').getContext('2d');
-  const chart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-      datasets: [{
-        label: 'Monthly Sales',
-        data: [12000, 15000, 18000, 10000, 13000, 17000],
-        backgroundColor: 'rgba(54, 162, 235, 0.7)'
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-</script>
+            cards.forEach(card => {
+                card.addEventListener('click', function () {
+                    // Add visual feedback on click
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
 
+            // Update date and time
+            function updateDateTime() {
+                const now = new Date();
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const dateString = now.toLocaleDateString('en-US', options);
+                const timeString = now.toLocaleTimeString('en-US');
+
+                // If you want to display date/time somewhere
+                document.getElementById('datetime').innerText = ${dateString} ${timeString};
+            }
+
+            updateDateTime();
+            setInterval(updateDateTime, 60000);
+        });
+    </script> -->
 </body>
+
 </html>

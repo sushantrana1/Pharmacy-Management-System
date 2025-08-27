@@ -11,7 +11,7 @@
 <body>
 
   <div class="login-container">
-    <h2>Pharmacy Login</h2>
+    <h2>Master Pharmacy Login</h2>
     <p>Secure login for pharmacy staff</p>
 
     <div class="role-toggle">
@@ -43,6 +43,7 @@
       <a href="forgot_password.php">Forgot password</a>
 
     </form> -->
+    
     <form action="login.php" method="POST" id="loginForm">
   <input type="hidden" name="role" id="roleInput" value="admin">
 
@@ -63,7 +64,7 @@
   </div>
 
   <button type="submit" class="login-btn btn-admin" id="loginBtn">Sign In as Admin</button>
-  <a href="forgot_password.php">Forgot password</a>
+  <a class="forgot-link" href="forgot_password.php">Forgot password</a>
 </form>
 
 <script>

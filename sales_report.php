@@ -39,7 +39,7 @@ if (!$result) {
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sales Report</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="sales_report.css">
 </head>
 
 <body>
@@ -65,6 +65,7 @@ if (!$result) {
     <p style="color: red;">No sales available.</p>
   <?php else: ?>
 
+ <div id="salesReport">
     <div class="table-responsive">
       <table>
         <tr>
@@ -92,19 +93,19 @@ if (!$result) {
         <?php endwhile; ?>
       </table>
     </div>
+  </div>
   <?php endif; ?>
 
   <!-- html2pdf library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script> 
 
   <!-- Script to download as PDF -->
-  <script>
+   <script>
     function downloadPDF() {
       const report = document.getElementById("salesReport");
       html2pdf().from(report).save("Sales_Report.pdf");
     }
-  </script>
+  </script> 
 
 </body>
-
 </html>

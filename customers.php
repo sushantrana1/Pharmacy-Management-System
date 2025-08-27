@@ -18,7 +18,7 @@ $customers = $conn->query("SELECT * FROM customer");
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Customer Management</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/customers.css">
 </head>
 
 <body>
@@ -41,9 +41,11 @@ $customers = $conn->query("SELECT * FROM customer");
     <input type="number" name="C_Age" placeholder="Age">
     <input type="text" name="C_Phno" placeholder="Phone Number">
     <input type="email" name="C_Mail" placeholder="Email">
+    <br><br>
     <button type="submit">Add Customer</button>
   </form>
 
+  <br>
   <h2>Customer List</h2>
 
   <div class="table-responsive">
@@ -67,16 +69,20 @@ $customers = $conn->query("SELECT * FROM customer");
           <td><?= $c['C_Mail'] ?></td>
           <td>
 
+            <a class="btn-edit" href="edit_customer.php?id=<?= $c['C_ID'] ?>">Edit</a>
+            <!-- <a class="btn-del" href="delete_customer.php?id=<?= $row[' C_ID'] ?>"
+              onclick="return confirm('Delete this customer?')">Delete</a> -->
+
             <?php
             $role = $_SESSION['role'];
-
             if ($role == 'admin') {
-              echo "<a class='btn-edit' href='edit_customer.php?id={$c['C_ID']}'>Edit</a>";
+              // echo "<a class='btn-edit' href='edit_customer.php?id={$c['C_ID']}'>Edit</a>";
               echo "<a class='btn-del' href='delete_customer.php?id={$c['C_ID']}' onclick='return confirm(\"Delete this customer?\")'>Delete</a>";
             } else {
-              echo "<span style='color: gray;'>View Only</span>";
+              echo "<span style='color: black;'>View Only</span>";
             }
-            ?>
+            ?> 
+
           </td>
         </tr>
       <?php endwhile; ?>

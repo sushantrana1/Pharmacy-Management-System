@@ -11,9 +11,9 @@ if ($query && $query->num_rows > 0) {
   echo "<p><strong>Username:</strong> " . $user['email'] . "</p>";
   echo "<p><strong>Role:</strong> " . $user['role'] . "</p>";
   echo "<p><strong>Password:</strong> <span style='color: green; font-weight: bold'>" . $user['password'] . "</span></p>";
-  echo "<p><a style='color:red;' href='index.php'>Back to Login</a></p>";
+  echo "<p><a style='color:red; font-weight: bold;' href='index.php'>Back to Login</a></p>";
 } else {
-  echo "<p style='color: red;'>User not found with this username or email.</p>";
+  echo "<p style='color: red;'>User not found with this email.</p>";
   echo "<a href='forgot_password.php'>Try Again</a>";
 }
 ?>

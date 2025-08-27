@@ -27,7 +27,13 @@ $purchases = $conn->query("
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Purchase Management</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/purchase.css">
+  <!-- Select2 CSS & jQuery (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <link rel="stylesheet" href="style.css"> <!-- your CSS -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
@@ -41,37 +47,50 @@ $purchases = $conn->query("
 
   <h2>Add New Purchase</h2>
   <form action="add_purchase.php" method="POST">
-    <label>Medicine:</label>
-    <select name="Med_ID" required>
-      <option value="">-- Select --</option>
-      <?php while ($m = $meds->fetch_assoc()): ?>
-        <option value="<?= $m['Med_ID'] ?>"><?= $m['Med_Name'] ?></option>
-      <?php endwhile; ?>
-    </select>
 
-    <label>Supplier:</label>
-    <select name="Sup_ID" required>
-      <option value="">-- Select --</option>
-      <?php while ($s = $suppliers->fetch_assoc()): ?>
-        <option value="<?= $s['Sup_ID'] ?>"><?= $s['Sup_Name'] ?></option>
+    <!-- Medicine dropdown -->
+    <label>Medicine:</label>
+    <select name="Med_ID" id="medicineSelect" class="searchable" required>
+      <option value="">-- Select Medicine --</option>
+      <?php
+      $meds = $conn->query("SELECT * FROM medicine");
+      while ($m = $meds->fetch_assoc()):
+        ?>
+        <option value="<?= $m['Med_ID'] ?>">
+          <?= htmlspecialchars($m['Med_Name']) ?> (Stock: <?= $m['Med_Qty'] ?>, Rs. <?= $m['Med_Price'] ?>)
+        </option>
       <?php endwhile; ?>
-    </select><br>
+    </select><br><br>
+
+    <!-- Supplier dropdown -->
+    <label>Supplier:</label>
+    <select name="Sup_ID" id="supplierSelect" class="searchable" required>
+      <option value="">-- Select Supplier --</option>
+      <?php
+      $suppliers = $conn->query("SELECT * FROM suppliers");
+      while ($s = $suppliers->fetch_assoc()):
+        ?>
+        <option value="<?= $s['Sup_ID'] ?>">
+          <?= htmlspecialchars($s['Sup_Name']) ?>
+        </option>
+      <?php endwhile; ?>
+    </select><br><br>
 
     <label>Quantity:</label>
     <input type="number" name="P_Qty" required>
-
     <label>Cost Price per Unit:</label>
-    <input type="number" step="0.01" name="P_Cost" required><br>
+    <input type="number" step="0.01" name="P_Cost" required>
 
     <label>MFG Date:</label>
     <input type="date" name="Mfg_Date">
 
     <label>EXP Date:</label>
-    <input type="date" name="Exp_Date">
+    <input type="date" name="Exp_Date"><br><br>
 
     <button type="submit">Add Purchase</button>
   </form>
 
+  <br>
   <h2>Purchase History</h2>
   <div class="table-responsive">
     <table>
@@ -99,6 +118,16 @@ $purchases = $conn->query("
       <?php endwhile; ?>
     </table>
   </div>
+
+  <script>
+    $(document).ready(function () {
+      $('.searchable').select2({
+        placeholder: "Search...",
+        allowClear: true,
+        width: '100%'
+      });
+    });
+  </script>
 
 </body>
 

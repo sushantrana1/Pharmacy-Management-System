@@ -17,7 +17,7 @@ $suppliers = $conn->query("SELECT * FROM suppliers");
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Supplier Management</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/suppliers.css">
 </head>
 
 <body>
@@ -35,9 +35,11 @@ $suppliers = $conn->query("SELECT * FROM suppliers");
     <input type="text" name="Sup_Phno" placeholder="Phone">
     <input type="email" name="Sup_Mail" placeholder="Email">
     <input type="text" name="Sup_Add" placeholder="Address">
+    <br><br>
     <button type="submit">Add Supplier</button>
   </form>
 
+  <br>
   <h2>Supplier List</h2>
   <div class="table-responsive">
     <table>
@@ -57,10 +59,23 @@ $suppliers = $conn->query("SELECT * FROM suppliers");
           <td><?= $row['Sup_Mail'] ?></td>
           <td><?= $row['Sup_Add'] ?></td>
           <td>
-            <a class="btn-edit" href="edit_supplier.php?id=<?= $row['Sup_ID'] ?>">Edit</a>
+
+            <!-- <a class="btn-edit" href="edit_supplier.php?id=<?= $row['Sup_ID'] ?>">Edit</a> 
             <a class="btn-del" href="delete_supplier.php?id=<?= $row['Sup_ID'] ?>"
-              onclick="return confirm('Delete this supplier?')">Delete</a>
-          </td>
+              onclick="return confirm('Delete this supplier?')">Delete</a>  -->
+          
+          <?php
+            $role = $_SESSION['role'];
+
+            if ($role == 'admin') {
+              echo "<a class='btn-edit' href='edit_supplier.php?id={$row['Sup_ID']}'>Edit</a>";
+              echo "<a class='btn-del' href='delete_supplier.php?id={$row['Sup_ID']}' onclick='return confirm(\"Delete this supplier?\")'>Delete</a>";
+            } else {
+              echo "<span style='color: black;'>View Only</span>";
+            }
+            ?> 
+            
+            </td>
         </tr>
       <?php endwhile; ?>
     </table>
