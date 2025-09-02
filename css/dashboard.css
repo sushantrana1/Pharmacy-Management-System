@@ -35,10 +35,10 @@
             background: linear-gradient(135deg, var(--secondary), var(--primary));
             color: var(--white);
             padding: 20px;
-            position: fixed;
-            width: 235px;
+            position:fixed;
+            width: 220px;
             height: 100%;
-            overflow-y:auto;
+            overflow-y:hidden;
         }
 
         .logo {
@@ -64,7 +64,7 @@
         }
 
         .sidebar-menu li {
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .sidebar-menu a {
