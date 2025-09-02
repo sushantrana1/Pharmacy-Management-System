@@ -60,7 +60,7 @@ $itemResult = $conn->query($itemQuery);
   <br>
 
   <div class="invoice-box">
-    <h2>🧾 Master Pharmacy Payment Invoice</h2>
+    <h2>🧾 Master Pharmacy - Payment Invoice</h2>
 
     <p><b>Sale ID:</b> <?= $sale['Sale_ID'] ?></p>
     <p><b>Customer:</b> <?= $sale['customer_name'] ?? 'Guest' ?></p>

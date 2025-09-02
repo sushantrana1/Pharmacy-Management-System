@@ -25,7 +25,9 @@
                 <li><a href="employees.php"><i class="fas fa-user-md"></i> Employees</a></li>
                 <li><a href="customers.php"><i class="fas fa-user"></i> Customers</a></li>
                 <li><a href="sales.php"><i class="fas fa-cash-register"></i> Sales</a></li>
+                <li><a href="payment_history.php"><i class="fas fa-credit-card"></i> Payment History</a></li>
                 <li><a href="sales_report.php"><i class="fas fa-chart-line"></i> Sales Report</a></li>
+                <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </div>
 
