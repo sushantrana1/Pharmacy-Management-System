@@ -92,7 +92,7 @@
         /* Main Content Styles */
         .main-content {
             grid-column: 2;
-            padding: 20px;
+            padding: 5px;
         }
 
         .header {
