@@ -85,14 +85,14 @@ $emps = $conn->query("SELECT * FROM employee");
           <td><?= $e['E_Add'] ?></td>
           <td>
 
-        <a class="btn-edit" href="edit_employee.php?id=<?= $e['E_ID'] ?>">Edit</a>
+        <!-- <a class="btn-edit" href="edit_employee.php?id=<?= $e['E_ID'] ?>">Edit</a> -->
         <!-- <a class="btn-del" href="delete_employee.php?id=<?= $e['E_ID'] ?>" onclick="return confirm('Delete this employee?')">Delete</a> --> 
            
            <?php
             $role = $_SESSION['role'];
 
             if ($role == 'admin') {
-              // echo "<a class='btn-edit' href='edit_employee.php?id={$e['E_ID']}'>Edit</a>";
+              echo "<a class='btn-edit' href='edit_employee.php?id={$e['E_ID']}'>Edit</a>";
               echo "<a class='btn-del' href='delete_employee.php?id={$e['E_ID']}' onclick='return confirm(\"Delete this employee?\")'>Delete</a>";
             } else {
               echo "<span style='color: black;'>View Only</span>";
