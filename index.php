@@ -44,6 +44,13 @@
 
     </form> -->
     
+    <?php
+    // Display error message if login fails
+    if (isset($_GET['error']) && $_GET['error'] == 1) {
+      echo '<p style="color: red; text-align: center;">Invalid email, password, or role. Please try again.</p>';
+    }
+    ?>
+
     <form action="login.php" method="POST" id="loginForm">
   <input type="hidden" name="role" id="roleInput" value="admin">
 
