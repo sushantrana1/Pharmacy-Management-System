@@ -38,7 +38,7 @@ Developed using HTML, CSS, JavaScript, PHP, and MySQL, the PMS offers a responsi
 
 -Local database integration with MySQL
 
-##🧠 System Architecture
+## 🧠 System Architecture
 
 -The system follows a client-server architecture, where:
 
@@ -49,7 +49,7 @@ Developed using HTML, CSS, JavaScript, PHP, and MySQL, the PMS offers a responsi
 -MySQL serves as the database for storing medicine, employee, customer, and sales data.
 
 
-##🧩 System Modules
+## 🧩 System Modules
 
 -Login Module: Secure login for admin and pharmacist
 
@@ -68,3 +68,21 @@ Developed using HTML, CSS, JavaScript, PHP, and MySQL, the PMS offers a responsi
 -Report Generation: View sales, purchase, and payment reports
 
 -Payment History: Track and manage all payments
+
+## 🧪 Testing
+
+The PMS was tested primarily through unit testing and manual test cases.
+Each module was verified independently to ensure functionality, data validation, and interface integrity.
+Testing confirmed the reliability of the login process, inventory updates, and sales record generation.
+
+## ⚙️ Default Login Credentials
+
+Admin: admin@gmail.com | Password: admin123  
+Pharmacist: pharma@gmail.com | Password: pharma123
+
+## 👨‍💻 Developer
+
+Developed by: Sushant Rana
+Project Type: Academic Project
+Institution: Tribhuvan University
+Semester: 6th Semester, BIM
