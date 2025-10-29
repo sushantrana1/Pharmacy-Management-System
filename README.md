@@ -1,35 +1,8 @@
-💊 Pharmacy Management System (PMS)
-📘 Overview
+# 💊 Pharmacy Management System (PMS)
+## 🧾 Project Overview
 
-The Pharmacy Management System (PMS) is a web-based application developed to digitalize and automate the daily operations of a pharmacy.
-It provides an efficient way to manage medicines, customers, employees, suppliers, purchases, sales, invoices, and reports.
-The system ensures accuracy, reduces manual workload, and offers a user-friendly interface for both Admin and Pharmacist roles.
+The Pharmacy Management System (PMS) is a complete web-based solution designed to streamline and digitalize the day-to-day operations of a pharmacy.
+It automates key processes like medicine management, sales and billing, purchase records, supplier tracking, employee management, and report generation.
+The system ensures efficient inventory control, reduces manual effort, and provides a secure login system for Admin and Pharmacist roles.
 
-🚀 Features
-👨‍💼 Admin Module
-
-Manage medicines (Add, Update, Delete, View)
-
-Manage employees, suppliers, and purchases
-
-Generate reports and monitor sales
-
-Manage payment history and inventory
-
-💊 Pharmacist Module
-
-Process medicine sales and generate invoices
-
-Manage and register customers
-
-View sales reports and payment details
-
-⚙️ Common Features
-
-Secure login and role-based access
-
-Auto-update stock after purchases or sales
-
-Responsive and interactive user interface
-
-Real-time database management with PHP & MySQL
+Developed using HTML, CSS, JavaScript, PHP, and MySQL, the PMS offers a responsive and user-friendly interface that allows pharmacies to manage operations effectively and maintain accurate records.
