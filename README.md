@@ -10,10 +10,10 @@ Developed using HTML, CSS, JavaScript, PHP, and MySQL, the PMS offers a responsi
 ## ✨ Key Features
 ## 👨‍💼 Admin Features
 
-Manage medicines (add, update, delete, view)
+-Manage medicines (add, update, delete, view)
 
-Manage employees, suppliers, and purchase details
+-Manage employees, suppliers, and purchase details
 
-View and generate sales and purchase reports
+-View and generate sales and purchase reports
 
-Access payment history and inventory details
+-Access payment history and inventory details
