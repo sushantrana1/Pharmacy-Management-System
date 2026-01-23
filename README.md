@@ -1,5 +1,5 @@
-# 💊 Pharmacy Management System (PMS)
-## 🧾 Project Overview
+# Pharmacy Management System (PMS)
+## Project Overview
 
 The Pharmacy Management System (PMS) is a complete web-based solution designed to streamline and digitalize the day-to-day operations of a pharmacy.
 It automates key processes like medicine management, sales and billing, purchase records, supplier tracking, employee management, and report generation.
@@ -7,8 +7,8 @@ The system ensures efficient inventory control, reduces manual effort, and provi
 
 Developed using HTML, CSS, JavaScript, PHP, and MySQL, the PMS offers a responsive and user-friendly interface that allows pharmacies to manage operations effectively and maintain accurate records.
 
-## ✨ Key Features
-## 👨‍💼 Admin Features
+## Key Features
+## Admin Features
 
 -Manage medicines (add, update, delete, view)
 
@@ -18,7 +18,7 @@ Developed using HTML, CSS, JavaScript, PHP, and MySQL, the PMS offers a responsi
 
 -Access payment history and inventory details
 
-## 💊 Pharmacist Features
+## Pharmacist Features
 
 -Manage customer information
 
@@ -28,7 +28,7 @@ Developed using HTML, CSS, JavaScript, PHP, and MySQL, the PMS offers a responsi
 
 -Manage medicine stock updates automatically
 
-## ⚙️ General Features
+## General Features
 
 -Secure role-based authentication system
 
@@ -38,7 +38,7 @@ Developed using HTML, CSS, JavaScript, PHP, and MySQL, the PMS offers a responsi
 
 -Local database integration with MySQL
 
-## 🧠 System Architecture
+## System Architecture
 
 -The system follows a client-server architecture, where:
 
@@ -49,7 +49,7 @@ Developed using HTML, CSS, JavaScript, PHP, and MySQL, the PMS offers a responsi
 -MySQL serves as the database for storing medicine, employee, customer, and sales data.
 
 
-## 🧩 System Modules
+## System Modules
 
 -Login Module: Secure login for admin and pharmacist
 
@@ -69,18 +69,18 @@ Developed using HTML, CSS, JavaScript, PHP, and MySQL, the PMS offers a responsi
 
 -Payment History: Track and manage all payments
 
-## 🧪 Testing
+## Testing
 
 The PMS was tested primarily through unit testing and manual test cases.
 Each module was verified independently to ensure functionality, data validation, and interface integrity.
 Testing confirmed the reliability of the login process, inventory updates, and sales record generation.
 
-## ⚙️ Default Login Credentials
+## Default Login Credentials
 
 Admin: admin@gmail.com | Password: admin123  
 Pharmacist: pharma@gmail.com | Password: pharma123
 
-## 👨‍💻 Developer
+## Developer
 
 Developed by: Sushant Rana
 Project Type: Academic Project
