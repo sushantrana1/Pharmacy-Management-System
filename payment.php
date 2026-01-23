@@ -48,6 +48,7 @@ $itemResult = $conn->query($itemQuery);
 <head>
   <title>Payment Invoice</title>
   <link rel="stylesheet" href="css/payment.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -60,7 +61,7 @@ $itemResult = $conn->query($itemQuery);
   <br>
 
   <div class="invoice-box">
-    <h2>🧾 Master Pharmacy - Payment Invoice</h2>
+    <h2><i class="fa-solid fa-clipboard-list"></i> Master Pharmacy - Payment Invoice</h2>
 
     <p><b>Sale ID:</b> <?= $sale['Sale_ID'] ?></p>
     <p><b>Customer:</b> <?= $sale['customer_name'] ?? 'Guest' ?></p>
@@ -93,7 +94,10 @@ $itemResult = $conn->query($itemQuery);
     </div>
 
     <div style="text-align:right;">
-      <button class="btn-print" onclick="window.print()">Print Invoice</button>
+      <button class="btn-print" onclick="window.print()"
+        style="padding: 8px 16px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer;">
+    <i class="fa-solid fa-print"> </i> Print Report
+      </button>
     </div>
   </div>
 

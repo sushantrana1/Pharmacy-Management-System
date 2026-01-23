@@ -167,38 +167,7 @@
             </div>
         </div>
     </div>
-
-    <!-- <script>
-        // Simple JavaScript for interactive elements
-        document.addEventListener('DOMContentLoaded', function () {
-            // Add click events to cards and actions
-            const cards = document.querySelectorAll('.card, .pos-action, .report-item');
-
-            cards.forEach(card => {
-                card.addEventListener('click', function () {
-                    // Add visual feedback on click
-                    this.style.transform = 'scale(0.98)';
-                    setTimeout(() => {
-                        this.style.transform = '';
-                    }, 200);
-                });
-            });
-
-            // Update date and time
-            function updateDateTime() {
-                const now = new Date();
-                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                const dateString = now.toLocaleDateString('en-US', options);
-                const timeString = now.toLocaleTimeString('en-US');
-
-                // If you want to display date/time somewhere
-                document.getElementById('datetime').innerText = ${dateString} ${timeString};
-            }
-
-            updateDateTime();
-            setInterval(updateDateTime, 60000);
-        });
-    </script> -->
+            
 </body>
 
 </html>

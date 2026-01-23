@@ -27,6 +27,7 @@ $salesResult = $conn->query($salesQuery);
 <head>
   <title>Sales Report</title>
   <link rel="stylesheet" href="css/payment.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
   @media print {
     .btn-print, .back-btn, .logout-btn {
@@ -52,7 +53,7 @@ $salesResult = $conn->query($salesQuery);
   </div>
   <br>
 
-  <h2 style="text-align:center;">🧾 Master Pharmacy - Payment History</h2>
+  <h2 style="text-align:center;"><i class="fa-solid fa-clipboard-list"></i> Master Pharmacy - Payment History</h2>
 
   <?php while ($sale = $salesResult->fetch_assoc()): ?>
     <?php
@@ -102,7 +103,7 @@ $salesResult = $conn->query($salesQuery);
     class="btn-print" 
     onclick="window.print()" 
     style="padding: 8px 16px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer;">
-    🖨 Print Report
+    <i class="fa-solid fa-print"> </i> Print Report
   </button>
 </div>
 

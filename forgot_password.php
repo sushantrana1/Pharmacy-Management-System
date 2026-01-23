@@ -20,7 +20,7 @@
 
 <h2>Forgot Password</h2>
 
-<form action="password/get_password.php" method="POST">
+<form action="get_password.php" method="POST">
   <label>Enter your email:</label>
   <input type="text" name="identifier" required>
   <button type="submit">Show Password</button>
