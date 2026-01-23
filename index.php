@@ -63,7 +63,7 @@
   <div class="form-group">
     <label>Password</label>
     <input type="password" name="password" id="password" placeholder="********" required minlength="6">
-    <small id="passError" style="color:red; display:none;">Password must be at least 6 characters</small>
+    <small id="passError" style="color:red; display:none;">Password must be at least 6 charactersat, least 1 letter + 1 number</small>
   </div>
 
   <div class="form-options">

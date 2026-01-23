@@ -58,7 +58,7 @@
       background: #1f4a9e;
     }
 
-    /* Responsive */
+    /* Mobile Responsive */
     @media (max-width: 768px) {
       body {
         padding: 10px;

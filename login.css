@@ -1,24 +1,24 @@
 body {
-    
-  font-family: 'Segoe UI', sans-serif;
-  background-image: url('img/background.jpg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
+
+    font-family: 'Segoe UI', sans-serif;
+    background-image: url('img/background.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
 .login-container {
-  background: whitesmoke; 
-  padding: 30px;
-  border-radius: 15px;
-  width: 360px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  text-align: center;
+    background: whitesmoke;
+    padding: 30px;
+    border-radius: 15px;
+    width: 360px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
 }
 
 
@@ -124,3 +124,58 @@ body {
     font-size: 13px;
 }
 
+/* Mobile Responsive */
+@media (max-width: 480px) {
+
+    body {
+        padding: 15px;
+        height: auto;
+    }
+
+    .login-container {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .login-container h2 {
+        font-size: 22px;
+    }
+
+    .login-container p {
+        font-size: 13px;
+        margin-bottom: 15px;
+    }
+
+    #roleTitle {
+        font-size: 18px;
+    }
+
+    #roleSub {
+        font-size: 12px;
+    }
+
+    .role-toggle button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .form-group label {
+        font-size: 13px;
+    }
+
+    .form-group input {
+        font-size: 13px;
+        padding: 9px;
+    }
+
+    .login-btn {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .forgot-link {
+        font-size: 12px;
+    }
+}

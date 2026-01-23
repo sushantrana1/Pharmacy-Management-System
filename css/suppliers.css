@@ -102,7 +102,7 @@ div[style*="position: absolute"] {
   gap: 10px;
 }
 
-/* Mobile Responsive Design */
+/* Mobile Responsive */
 @media (max-width: 768px) {
   body {
     padding: 10px;
