@@ -64,6 +64,12 @@ if (isset($_GET['error']) && $_GET['error'] == 'expired') {
 
   <h2>Sales / Billing</h2>
 
+  <div class="stock-error-alert" id="stockErrorAlert">
+    <i class="fas fa-exclamation-triangle"></i>
+    <!-- <strong>INSUFFICIENT STOCK!</strong> -->
+    <p id="stockErrorMessage" style="margin: 5px 0 0 0;"></p>
+  </div>
+
   <div class="expired-alert" id="expiredAlert">
     <i class="fas fa-exclamation-triangle"></i>
     <strong>Note: Expired and Out of stock Medicine are Hidden! <br> </strong>
