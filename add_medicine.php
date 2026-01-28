@@ -12,4 +12,6 @@ $sql = "INSERT INTO medicine (Med_Name, Med_Qty, Med_Price, Category, Location_R
 $conn->query($sql);
 
 header("Location: medicine.php");
+
+include 'check_alerts.php';
 ?>

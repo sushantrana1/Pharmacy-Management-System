@@ -6,6 +6,40 @@ if (!isset($_SESSION['role'])) {
 }
 
 $conn = new mysqli("localhost", "root", "", "pharmacy");
+include 'check_expiry.php'; 
+
+if (isset($_GET['error']) && $_GET['error'] == 'stock') {
+    $med_name = isset($_GET['medicine']) ? urldecode($_GET['medicine']) : 'A medicine';
+    $available = isset($_GET['available']) ? $_GET['available'] : '0';
+    $requested = isset($_GET['requested']) ? $_GET['requested'] : '0';
+    
+    echo "<script>
+        window.addEventListener('DOMContentLoaded', function() {
+            let alertBox = document.getElementById('stockErrorAlert');
+            let alertMsg = document.getElementById('stockErrorMessage');
+            alertMsg.innerHTML = `
+                <strong>$med_name</strong> has only <strong>$available</strong> units available.<br>
+                You tried to sell: <strong>$requested</strong> units<br>
+                <span style='color: #fff3cd;'>Sale blocked due to insufficient stock!</span>
+            `;
+            alertBox.style.display = 'block';
+            setTimeout(() => { alertBox.style.display = 'none'; }, 8000);
+        });
+    </script>";
+}
+
+if (isset($_GET['error']) && $_GET['error'] == 'expired') {
+    $expired_med = isset($_GET['medicine']) ? urldecode($_GET['medicine']) : 'A medicine';
+    echo "<script>
+        window.addEventListener('DOMContentLoaded', function() {
+            let alertBox = document.getElementById('expiredAlert');
+            let alertMsg = document.getElementById('expiredMessage');
+            alertMsg.innerHTML = '<strong>$expired_med</strong> is EXPIRED. Sale blocked!';
+            alertBox.style.display = 'block';
+            setTimeout(() => { alertBox.style.display = 'none'; }, 7000);
+        });
+    </script>";
+}
 ?>
 
 <!DOCTYPE html>
@@ -30,9 +64,14 @@ $conn = new mysqli("localhost", "root", "", "pharmacy");
 
   <h2>Sales / Billing</h2>
 
+  <div class="expired-alert" id="expiredAlert">
+    <i class="fas fa-exclamation-triangle"></i>
+    <strong>Note: Expired and Out of stock Medicine are Hidden! <br> </strong>
+    <p id="expiredMessage" style="margin: 5px 0 0 0;"></p>
+  </div>
+
   <form action="sales_process.php" method="POST" id="salesForm">
 
-    <!-- Customer -->
     <label>Select Customer:</label>
     <select name="customer_id" id="customerSelect" class="searchable" required>
       <option value="">--Choose--</option>
@@ -45,19 +84,28 @@ $conn = new mysqli("localhost", "root", "", "pharmacy");
     </select>
     <br><br>
 
-    <!-- Medicine -->
     <label>Select Medicine:</label>
     <select name="medicine_id" id="medicineSelect" class="searchable" required>
       <option value="">--Choose--</option>
 
       <?php
-      $meds = $conn->query("SELECT * FROM medicine");
-      while ($m = $meds->fetch_assoc()) {
-        echo "<option value='{$m['Med_ID']}' data-price='{$m['Med_Price']}'>{$m['Med_Name']}</option>";
+
+      $availableMeds = getAvailableMedicines($conn);
+      while ($m = $availableMeds->fetch_assoc()) {
+        echo "<option value='{$m['Med_ID']}' 
+                      data-price='{$m['Med_Price']}'
+                      data-stock='{$m['Med_Qty']}'
+                      data-name='{$m['Med_Name']}'>
+                {$m['Med_Name']} - Stock: {$m['Med_Qty']} - Rs.{$m['Med_Price']}
+              </option>";
       }
       ?>
-
     </select>
+
+    <div class="stock-info" id="stockInfo">
+      <i class="fas fa-box"></i>
+      <strong>Available Stock: <span id="availableStock">0</span> units</strong>
+    </div>
     <br><br>
 
     <label>Quantity</label>
@@ -66,7 +114,6 @@ $conn = new mysqli("localhost", "root", "", "pharmacy");
     <button type="button" onclick="addMedicine()">Add Medicine</button>
     <br><br><br>
 
-    <!-- Items Table -->
     <table id="itemsTable">
       <thead>
         <tr>
@@ -74,16 +121,15 @@ $conn = new mysqli("localhost", "root", "", "pharmacy");
           <th>Qty</th>
           <th>Price</th>
           <th>Total</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody></tbody>
     </table>
 
-    <!-- Grand Total -->
     <div class="total-box">Grand Total: Rs. <span id="grandTotal">0</span></div>
     <input type="hidden" name="total_amount" id="total_amount">
 
-    <!-- Hidden field for medicines -->
     <input type="hidden" name="medicines_json" id="medicines_json">
 
     <button type="submit">Complete Sale</button>
@@ -93,9 +139,29 @@ $conn = new mysqli("localhost", "root", "", "pharmacy");
     let medicines = [];
     let grandTotal = 0;
 
+    document.getElementById("medicineSelect").addEventListener("change", function() {
+      let select = this;
+      let stockInfo = document.getElementById("stockInfo");
+      let availableStock = document.getElementById("availableStock");
+      
+      if (select.value) {
+        let stock = select.options[select.selectedIndex].getAttribute("data-stock");
+        availableStock.textContent = stock;
+        stockInfo.classList.add("show");
+  
+        document.getElementById("medicineQty").setAttribute("max", stock);
+      } else {
+        stockInfo.classList.remove("show");
+      }
+    });
+
     function addMedicine() {
       let select = document.getElementById("medicineSelect");
       let qty = parseInt(document.getElementById("medicineQty").value);
+      let expiredAlert = document.getElementById("expiredAlert");
+      let expiredMsg = document.getElementById("expiredMessage");
+      let stockErrorAlert = document.getElementById("stockErrorAlert");
+      let stockErrorMsg = document.getElementById("stockErrorMessage");
 
       if (!select.value || qty <= 0) {
         alert("Please select a medicine and enter valid qty");
@@ -103,17 +169,76 @@ $conn = new mysqli("localhost", "root", "", "pharmacy");
       }
 
       let medId = select.value;
-      let medName = select.options[select.selectedIndex].text;
+      let medName = select.options[select.selectedIndex].getAttribute("data-name");
       let price = parseFloat(select.options[select.selectedIndex].getAttribute("data-price"));
-      let total = qty * price;
+      let availableStock = parseInt(select.options[select.selectedIndex].getAttribute("data-stock"));
 
-      medicines.push({ id: medId, name: medName, qty: qty, price: price, total: total });
-      updateTable();
+      let alreadyAdded = 0;
+      medicines.forEach(med => {
+        if (med.id == medId) {
+          alreadyAdded += med.qty;
+        }
+      });
+
+      let totalRequested = alreadyAdded + qty;
+
+
+      if (totalRequested > availableStock) {
+
+        stockErrorMsg.innerHTML = `
+          <strong>${medName}</strong> has only <strong>${availableStock}</strong> units in stock.<br>
+          Already in cart: <strong>${alreadyAdded}</strong> units<br>
+          Trying to add: <strong>${qty}</strong> units<br>
+          Total needed: <strong>${totalRequested}</strong> units<br>
+          <span style="color: #fff3cd;">Cannot add! Insufficient stock.</span>
+        `;
+        stockErrorAlert.style.display = 'block';
+        
+        setTimeout(() => {
+          stockErrorAlert.style.display = 'none';
+        }, 6000);
+        
+        return; 
+      }
+
+      fetch('check_medicine_expiry.php?med_id=' + medId)
+        .then(response => response.json())
+        .then(data => {
+          if (data.is_expired) {
+
+            expiredMsg.innerHTML = `<strong>${data.medicine_name}</strong> is EXPIRED (Exp: ${data.exp_date}). Cannot be sold!`;
+            expiredAlert.style.display = 'block';
+            
+            setTimeout(() => {
+              expiredAlert.style.display = 'none';
+            }, 5000);
+            
+            return;
+          }
+
+          let total = qty * price;
+          medicines.push({ id: medId, name: medName, qty: qty, price: price, total: total });
+          updateTable();
+          
+          document.getElementById("medicineQty").value = 1;
+          
+          let remainingStock = availableStock - totalRequested;
+          document.getElementById("availableStock").textContent = remainingStock;
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Error checking medicine expiry');
+        });
     }
 
     function removeMedicine(index) {
       medicines.splice(index, 1);
       updateTable();
+
+      let select = document.getElementById("medicineSelect");
+      if (select.value) {
+        select.dispatchEvent(new Event('change'));
+      }
     }
 
     function updateTable() {
@@ -124,19 +249,33 @@ $conn = new mysqli("localhost", "root", "", "pharmacy");
       medicines.forEach((med, index) => {
         grandTotal += med.total;
         tbody.innerHTML += `
-      <tr>
-        <td>${med.name}</td>
-        <td>${med.qty}</td>
-        <td>Rs. ${med.price}</td>
-        <td>Rs. ${med.total}</td>
-      </tr>
-    `;
+          <tr>
+            <td>${med.name}</td>
+            <td>${med.qty}</td>
+            <td>Rs. ${med.price}</td>
+            <td>Rs. ${med.total}</td>
+            <td>
+              <button type="button" onclick="removeMedicine(${index})" 
+                      style="background: #e74c3c; color: white; border: none; 
+                             padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+                Remove
+              </button>
+            </td>
+          </tr>
+        `;
       });
 
       document.getElementById("grandTotal").innerText = grandTotal.toFixed(2);
       document.getElementById("total_amount").value = grandTotal.toFixed(2);
       document.getElementById("medicines_json").value = JSON.stringify(medicines);
     }
+
+    document.getElementById("salesForm").addEventListener("submit", function(e) {
+      if (medicines.length === 0) {
+        e.preventDefault();
+        alert("Please add at least one medicine to the cart!");
+      }
+    });
   </script>
 
   <script>
@@ -147,7 +286,6 @@ $conn = new mysqli("localhost", "root", "", "pharmacy");
       });
     });
   </script>
-
 
 </body>
 

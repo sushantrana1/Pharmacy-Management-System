@@ -14,4 +14,6 @@ $conn->query("INSERT INTO purchase (Med_ID, Sup_ID, P_Qty, P_Cost, Mfg_Date, Exp
 $conn->query("UPDATE medicine SET Med_Qty = Med_Qty + $P_Qty WHERE Med_ID = $Med_ID");
 
 header("Location: purchase.php");
+
+include 'check_alerts.php';
 ?>

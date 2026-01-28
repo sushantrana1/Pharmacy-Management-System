@@ -68,7 +68,8 @@ table {
   overflow: hidden;
 }
 
-th, td {
+th,
+td {
   padding: 10px;
   text-align: center;
   border-bottom: 1px solid #ddd;
@@ -126,6 +127,111 @@ a[href*="logout.php"]:hover {
   background-color: #c0392b;
 }
 
+.expired-alert {
+  background: #ff4757;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  display: none;
+  animation: shake 0.5s;
+  box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+.expired-alert i {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.expired-alert strong {
+  font-size: 16px;
+}
+
+.stock-error-alert {
+  background: #ff6b6b;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  display: none;
+  animation: shake 0.5s;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+  border-left: 5px solid #c92a2a;
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+.stock-error-alert i {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.stock-error-alert strong {
+  font-size: 16px;
+}
+
+.stock-info {
+  background: #e3f2fd;
+  color: #1565c0;
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin: 10px 0;
+  font-size: 14px;
+  display: none;
+}
+
+.stock-info.show {
+  display: block;
+}
+
+.stock-info i {
+  margin-right: 8px;
+}
+
 /* Mobile Responsive Design */
 @media (max-width: 768px) {
   body {
@@ -163,7 +269,8 @@ a[href*="logout.php"]:hover {
     font-size: 14px;
   }
 
-  th, td {
+  th,
+  td {
     min-width: 80px;
     padding: 6px;
   }
@@ -175,7 +282,7 @@ a[href*="logout.php"]:hover {
 
   a {
     display: block;
-    margin-bottom: 5px; 
+    margin-bottom: 5px;
     width: 100%;
     padding: 6px;
     text-align: center;

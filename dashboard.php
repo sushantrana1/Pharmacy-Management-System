@@ -1,3 +1,40 @@
+<?php
+session_start();
+if (!isset($_SESSION['role'])) {
+  header("Location: index.php");
+  exit();
+}
+
+$conn = new mysqli("localhost", "root", "", "pharmacy");
+
+$table_check = $conn->query("SHOW TABLES LIKE 'alerts'");
+$alerts_exist = ($table_check->num_rows > 0);
+
+if ($alerts_exist) {
+   
+    @include 'check_alerts.php';
+
+    $totalAlerts = $conn->query("
+      SELECT COUNT(*) as count FROM alerts WHERE status = 'active'
+    ")->fetch_assoc()['count'];
+
+    $allAlerts = $conn->query("
+      SELECT * FROM alerts 
+      WHERE status = 'active'
+      ORDER BY 
+        CASE 
+          WHEN alert_type = 'expiry' THEN 1 
+          WHEN alert_type = 'low_stock' THEN 2 
+        END,
+        alert_date DESC
+      LIMIT 20
+    ");
+} else {
+    $totalAlerts = 0;
+    $allAlerts = null;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +42,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Master Pharmacy - Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/bell.css">
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
@@ -18,15 +55,17 @@
             </div>
 
             <ul class="sidebar-menu">
-                <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="dashboard.php" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
                 <li><a href="medicine.php"><i class="fas fa-pills"></i> Medicine</a></li>
                 <li><a href="suppliers.php"><i class="fas fa-truck"></i> Suppliers</a></li>
                 <li><a href="purchase.php"><i class="fas fa-boxes"></i> Purchase</a></li>
                 <li><a href="employees.php"><i class="fas fa-user-md"></i> Employees</a></li>
                 <li><a href="customers.php"><i class="fas fa-user"></i> Customers</a></li>
+                <li><a href="low_stock.php"><i class="fas fa-bell"></i> Stock Alert</a></li>
                 <li><a href="sales.php"><i class="fas fa-cash-register"></i> Sales</a></li>
                 <li><a href="payment_history.php"><i class="fas fa-credit-card"></i> Payment History</a></li>
                 <li><a href="sales_report.php"><i class="fas fa-chart-line"></i> Sales Report</a></li>
+                <li><a href="expired_medicines.php"><i class="fas fa-calendar-times"></i> Expired Medicines</a></li>
                 <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </div>
@@ -40,8 +79,55 @@
                 </div>
 
                 <div class="user-info">
+                  
+                  <?php if ($alerts_exist): ?>
+                  <!-- Notification Bell -->
+                  <div class="notification-bell-small">
+                    <button class="bell-button">
+                      <i class="fas fa-bell"></i>
+                      <?php if ($totalAlerts > 0): ?>
+                        <span class="bell-badge"><?= $totalAlerts ?></span>
+                      <?php endif; ?>
+                    </button>
+                    
+                    <div class="bell-dropdown">
+                      <div class="bell-dropdown-header">
+                        <i class="fas fa-bell"></i>
+                        Notifications (<?= $totalAlerts ?>)
+                      </div>
+                      
+                      <div class="bell-dropdown-content">
+                        <?php if ($totalAlerts > 0 && $allAlerts): ?>
+                          <?php while ($alert = $allAlerts->fetch_assoc()): ?>
+                            <div class="alert-item alert-<?= $alert['alert_type'] ?>">
+                              <div class="alert-icon">
+                                <?php if ($alert['alert_type'] == 'low_stock'): ?>
+                                  <i class="fas fa-box-open"></i>
+                                <?php else: ?>
+                                  <i class="fas fa-calendar-times"></i>
+                                <?php endif; ?>
+                              </div>
+                              <div class="alert-content">
+                                <div class="alert-message"><?= htmlspecialchars($alert['message']) ?></div>
+                                <div class="alert-time"><?= date('M d, g:i A', strtotime($alert['alert_date'])) ?></div>
+                              </div>
+                              <a href="dismiss_alert.php?id=<?= $alert['alert_id'] ?>" class="dismiss-x">×</a>
+                            </div>
+                          <?php endwhile; ?>
+                        <?php else: ?>
+                          <div class="no-alerts">
+                            All clear! No alerts.
+                          </div>
+                        <?php endif; ?>
+                      </div>
+                    </div>
+                  </div>
+                  <?php endif; ?>
 
-                    <a href="logout.php" class="btn btn-danger logout-btn"><i class="fas fa-sign-out-alt"></i>Logout</a>
+                  <!-- Logout Button -->
+                  <a href="logout.php" class="btn btn-danger logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                  </a>
 
                 </div>
             </div>

@@ -1,0 +1,186 @@
+    .notification-bell-small {
+        position: relative;
+        display: inline-block;
+        margin-right: 15px;
+    }
+
+    .bell-button {
+        background: white;
+        border: 2px solid #e0e0e0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        position: relative;
+    }
+
+    .bell-button:hover {
+        background: #f8f9fa;
+        border-color: #3498db;
+        transform: scale(1.05);
+    }
+
+    .bell-button i {
+        color: #2c3e50;
+        font-size: 18px;
+    }
+
+    .bell-button:hover i {
+        color: #3498db;
+        animation: ring 0.5s ease;
+    }
+
+    @keyframes ring {
+
+        0%,
+        100% {
+            transform: rotate(0deg);
+        }
+
+        10%,
+        30% {
+            transform: rotate(-10deg);
+        }
+
+        20%,
+        40% {
+            transform: rotate(10deg);
+        }
+    }
+
+    .bell-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #e74c3c;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: bold;
+        border: 2px solid white;
+    }
+
+    .bell-dropdown {
+        display: none;
+        position: absolute;
+        top: 50px;
+        right: 0;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        width: 350px;
+        max-height: 450px;
+        z-index: 1000;
+        overflow: hidden;
+    }
+
+    .notification-bell-small:hover .bell-dropdown {
+        display: block;
+    }
+
+    .bell-dropdown-header {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 12px 15px;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .bell-dropdown-content {
+        max-height: 350px;
+        overflow-y: auto;
+    }
+
+    .alert-item {
+        display: flex;
+        align-items: start;
+        gap: 10px;
+        padding: 12px 15px;
+        border-bottom: 1px solid #f0f0f0;
+        transition: background 0.2s;
+    }
+
+    .alert-item:hover {
+        background: #f8f9fa;
+    }
+
+    .alert-item.alert-low_stock {
+        border-left: 3px solid #e74c3c;
+    }
+
+    .alert-item.alert-expiry {
+        border-left: 3px solid #f39c12;
+    }
+
+    .alert-icon {
+        font-size: 20px;
+        flex-shrink: 0;
+    }
+
+    .alert-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .alert-message {
+        font-size: 13px;
+        color: #2c3e50;
+        margin-bottom: 3px;
+        line-height: 1.4;
+    }
+
+    .alert-time {
+        font-size: 11px;
+        color: #95a5a6;
+    }
+
+    .dismiss-x {
+        color: #95a5a6;
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        padding: 0 5px;
+        transition: color 0.2s;
+        flex-shrink: 0;
+    }
+
+    .dismiss-x:hover {
+        color: #e74c3c;
+    }
+
+    .no-alerts {
+        padding: 40px 20px;
+        text-align: center;
+        color: #95a5a6;
+        font-size: 14px;
+    }
+
+    .bell-dropdown-content::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .bell-dropdown-content::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    .bell-dropdown-content::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 3px;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
