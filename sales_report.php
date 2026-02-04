@@ -4,8 +4,22 @@ if (!isset($_SESSION['role'])) {
   header("Location: index.php");
   exit();
 }
-$role = $_SESSION['role'];
-$users_link = ($role === 'admin') ? 'users/admin.php' : 'users/pharmacist.php';
+// $role = $_SESSION['role'];
+// $users_link = ($role === 'admin') ? 'users/admin.php' : 'users/pharmacist.php';
+
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+  die('
+    <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; gap:20px;">
+      <h2 style="color:red;">Access Denied: Admin Only.</h2>
+
+      <a href="dashboard.php"
+        style="padding: 10px 16px; background: #3498db; color: white; text-decoration: none; border-radius: 6px;">
+        Back
+      </a>
+    </div>
+  ');
+}
+
 
 $conn = new mysqli("localhost", "root", "", "pharmacy");
 

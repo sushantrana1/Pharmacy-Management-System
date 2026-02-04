@@ -63,9 +63,10 @@ if ($alerts_exist) {
                 <li><a href="customers.php"><i class="fas fa-user"></i> Customers</a></li>
                 <li><a href="low_stock.php"><i class="fas fa-bell"></i> Stock Alert</a></li>
                 <li><a href="sales.php"><i class="fas fa-cash-register"></i> Sales</a></li>
-                <li><a href="payment_history.php"><i class="fas fa-credit-card"></i> Payment History</a></li>
                 <li><a href="sales_report.php"><i class="fas fa-chart-line"></i> Sales Report</a></li>
-                <li><a href="expired_medicines.php"><i class="fas fa-calendar-times"></i> Expired Medicines</a></li>
+                <li><a href="payment_report.php"><i class="fa-solid fa-chart-column"></i> Invoice Report</a></li>
+                <li><a href="payment_history.php"><i class="fas fa-credit-card"></i> Pay. History</a></li>
+                <li><a href="expired_medicines.php"><i class="fas fa-calendar-times"></i> Expired Meds.</a></li>
                 <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </div>

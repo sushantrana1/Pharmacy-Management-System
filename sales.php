@@ -49,8 +49,102 @@ if (isset($_GET['error']) && $_GET['error'] == 'expired') {
   <title>Sales / Billing</title>
   <link rel="stylesheet" href="css/sales.css">
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <style>
+    .payment-method-section {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+  border: 2px solid #e0e0e0;
+  justify-content: center;
+}
+
+.payment-method-section h3 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.payment-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.payment-option {
+  position: relative;
+}
+
+.payment-option input[type="radio"] {
+  display: none;
+}
+
+.payment-option label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: white;
+  border: 2px solid #dee2e6;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  min-height: 120px;
+}
+
+.payment-option input[type="radio"]:checked + label {
+  border-color: #28a745;
+  background: #e8f5e9;
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+}
+
+.payment-option label i {
+  font-size: 36px;
+  margin-bottom: 10px;
+  color: #495057;
+}
+
+.payment-option input[type="radio"]:checked + label i {
+  color: #28a745;
+}
+
+.payment-option label span {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.payment-details {
+  display: none;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
+
+.payment-details.active {
+  display: block;
+}
+
+.payment-details input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.payment-details label {
+  font-weight: 600;
+  color: #495057;
+  display: block;
+  margin-top: 10px;
+}
+  </style>
 </head>
 
 <body>
@@ -137,6 +231,74 @@ if (isset($_GET['error']) && $_GET['error'] == 'expired') {
     <input type="hidden" name="total_amount" id="total_amount">
 
     <input type="hidden" name="medicines_json" id="medicines_json">
+
+<div class="payment-method-section">
+  <h3>Select Payment Method</h3>
+  
+  <div class="payment-options">
+    <!-- Cash -->
+    <div class="payment-option">
+      <input type="radio" id="payment_cash" name="payment_method" value="Cash" checked>
+      <label for="payment_cash">
+        <i class="fa-brands fa-cash-app"></i>
+        <span>Cash</span>
+      </label>
+    </div>
+    
+    <!-- eSewa -->
+    <div class="payment-option">
+      <input type="radio" id="payment_esewa" name="payment_method" value="eSewa">
+      <label for="payment_esewa">
+        <i class="fab fa-paypal"></i>
+        <span>eSewa</span>
+      </label>
+    </div>
+    
+    <!-- Bank -->
+    <div class="payment-option">
+      <input type="radio" id="payment_bank" name="payment_method" value="Bank">
+      <label for="payment_bank">
+        <i class="fas fa-university"></i>
+        <span>Bank Transfer</span>
+      </label>
+    </div>
+    
+    <!-- Credit -->
+    <div class="payment-option">
+      <input type="radio" id="payment_credit" name="payment_method" value="Credit">
+      <label for="payment_credit">
+        <i class="fas fa-credit-card"></i>
+        <span>Credit/Later</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Payment Details Forms (shown based on selection) -->
+  
+  <!-- eSewa Details -->
+  <div id="esewa_details" class="payment-details">
+    <label>eSewa Transaction ID:</label>
+    <input type="text" name="esewa_transaction_id" placeholder="Enter eSewa Transaction ID">
+  </div>
+  
+  <!-- Bank Details -->
+  <div id="bank_details" class="payment-details">
+    <label>Bank Name:</label>
+    <input type="text" name="bank_name" placeholder="e.g., NIC Asia Bank">
+    
+    <label>Transaction Reference:</label>
+    <input type="text" name="bank_reference" placeholder="Enter Bank Reference Number">
+  </div>
+  
+  <!-- Credit Details -->
+  <div id="credit_details" class="payment-details">
+    <label>Credit Notes (Optional):</label>
+    <input type="text" name="credit_notes" placeholder="Customer name or reason">
+  </div>
+</div>
+
+<!-- Hidden fields for payment data -->
+<input type="hidden" name="payment_method_final" id="payment_method_final" value="Cash">
 
     <button type="submit">Complete Sale</button>
   </form>
@@ -292,6 +454,30 @@ if (isset($_GET['error']) && $_GET['error'] == 'expired') {
       });
     });
   </script>
+
+  <script>
+// Payment method selection handler
+document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
+  radio.addEventListener('change', function() {
+    // Hide all payment details
+    document.querySelectorAll('.payment-details').forEach(detail => {
+      detail.classList.remove('active');
+    });
+    
+    // Show relevant payment details
+    const method = this.value;
+    document.getElementById('payment_method_final').value = method;
+    
+    if (method === 'eSewa') {
+      document.getElementById('esewa_details').classList.add('active');
+    } else if (method === 'Bank') {
+      document.getElementById('bank_details').classList.add('active');
+    } else if (method === 'Credit') {
+      document.getElementById('credit_details').classList.add('active');
+    }
+  });
+});
+</script>
 
 </body>
 
