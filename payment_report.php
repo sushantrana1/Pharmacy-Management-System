@@ -120,7 +120,7 @@ $transactions = $conn->query("
   </div>
   <br>
 
-  <h2>💳 Payment Methods Report</h2>
+  <h2>Payment Methods Report</h2>
   
   <!-- Date Filter -->
   <div class="filter-box">
