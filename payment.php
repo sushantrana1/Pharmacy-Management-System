@@ -7,20 +7,22 @@ if (!isset($_SESSION['role'])) {
 
 $conn = new mysqli("localhost", "root", "", "pharmacy");
 
-// Get sale_id from URL
 if (!isset($_GET['sale_id'])) {
   echo "No sale selected!";
   exit();
 }
 $sale_id = intval($_GET['sale_id']);
 
-// Get sale details (without employee)
+// Get sale details WITH payment info
 $saleQuery = "
   SELECT 
     s.Sale_ID,
     s.S_Date,
     s.S_Time,
     s.Total_Amount,
+    s.payment_method,
+    s.payment_reference,
+    s.payment_status,
     CONCAT(c.C_Fname, ' ', c.C_Lname) AS customer_name
   FROM sales s
   LEFT JOIN customer c ON s.C_ID = c.C_ID
@@ -61,11 +63,36 @@ $itemResult = $conn->query($itemQuery);
   <br>
 
   <div class="invoice-box">
-    <h2><i class="fa-solid fa-clipboard-list"></i> Master Pharmacy - Payment Invoice</h2>
+    <h2>Master Pharmacy - Payment Invoice</h2>
 
     <p><b>Sale ID:</b> <?= $sale['Sale_ID'] ?></p>
     <p><b>Customer:</b> <?= $sale['customer_name'] ?? 'Guest' ?></p>
     <p><b>Date:</b> <?= $sale['S_Date'] ?> | <b>Time:</b> <?= $sale['S_Time'] ?></p>
+    
+    <!-- Payment Method Display -->
+    <div>
+      <b>Payment Method:</b>
+      <span class="payment-method-badge payment-<?= strtolower($sale['payment_method']) ?>">
+        <?php
+        $icons = [
+          'Cash' => 'fa-money-bill-wave',
+          'eSewa' => 'fa-mobile-alt',
+          'Bank' => 'fa-university',
+          'Credit' => 'fa-credit-card'
+        ];
+        $icon = $icons[$sale['payment_method']] ?? 'fa-money-bill';
+        ?>
+        <i class="fas <?= $icon ?>"></i> <?= $sale['payment_method'] ?>
+      </span>
+    </div>
+    
+    <?php if ($sale['payment_reference']): ?>
+      <p><b>Reference:</b> <?= htmlspecialchars($sale['payment_reference']) ?></p>
+    <?php endif; ?>
+    
+    <div class="payment-status status-<?= strtolower($sale['payment_status']) ?>">
+      Status: <?= $sale['payment_status'] === 'Paid' ? 'PAID' : 'PENDING' ?>
+    </div>
 
     <table>
       <tr>
@@ -94,10 +121,7 @@ $itemResult = $conn->query($itemQuery);
     </div>
 
     <div style="text-align:right;">
-      <button class="btn-print" onclick="window.print()"
-        style="padding: 8px 16px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer;">
-    <i class="fa-solid fa-print"> </i> Print Report
-      </button>
+      <button class="btn-print" onclick="window.print()">Print Invoice</button>
     </div>
   </div>
 
