@@ -26,7 +26,7 @@ $salesResult = $conn->query($salesQuery);
 <html>
 <head>
   <title>Sales Report</title>
-  <link rel="stylesheet" href="css/payment.css">
+  <link rel="stylesheet" href="css/payment_history.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
   @media print {

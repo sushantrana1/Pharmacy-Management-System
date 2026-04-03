@@ -18,7 +18,6 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
   ');
 }
 
-
 $conn = new mysqli("localhost", "root", "", "pharmacy");
 
 // Get date filter
@@ -121,7 +120,7 @@ $transactions = $conn->query("
   <br>
 
   <h2>💳 Payment Methods Report</h2>
-  
+
   <!-- Date Filter -->
   <div class="filter-box">
     <form method="GET" style="display: flex; gap: 10px; align-items: end;">
