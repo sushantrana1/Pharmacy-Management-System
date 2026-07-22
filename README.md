@@ -234,9 +234,9 @@ This project is developed for educational purposes as part of the Bachelor of In
 
 Bachelor of Information Management (BIM)
 
-📧 Email: your-email@example.com
+📧 Email: sushantrana1121@gmail.com
 
-🌐 GitHub: https://github.com/yourusername
+🌐 GitHub: https://github.com/Sushantrana1
 
 ---
 
